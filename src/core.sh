@@ -618,9 +618,6 @@ change() {
         [[ $is_auto ]] && is_new_servername=$is_random_servername
         [[ ! $is_new_servername ]] && ask string is_new_servername "请输入新的 serverName:"
         is_servername=$is_new_servername
-        [[ $(grep -i "^233boy.com$" <<<$is_servername) ]] && {
-            err "你干嘛～哎呦～"
-        }
         add $net
         ;;
     11)
@@ -632,13 +629,9 @@ change() {
         [[ ! -f $is_caddy_conf/${host}.conf.add ]] && err "无法配置伪装网站."
         [[ ! $is_new_proxy_site ]] && ask string is_new_proxy_site "请输入新的伪装网站 (例如 example.com):"
         proxy_site=$(sed 's#^.*//##;s#/$##' <<<$is_new_proxy_site)
-        [[ $(grep -i "^233boy.com$" <<<$proxy_site) ]] && {
-            err "你干嘛～哎呦～"
-        } || {
-            load caddy.sh
-            caddy_config proxy
-            manage restart caddy &
-        }
+        load caddy.sh
+        caddy_config proxy
+        manage restart caddy &
         msg "\n已更新伪装网站为: $(_green $proxy_site) \n"
         ;;
     12)
