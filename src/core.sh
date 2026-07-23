@@ -143,8 +143,8 @@ get_port() {
     is_count=0
     while :; do
         ((is_count++))
-        if [[ $is_count -ge 233 ]]; then
-            err "自动获取可用端口失败次数达到 233 次, 请检查端口占用情况."
+        if [[ $is_count -ge 100 ]]; then
+            err "自动获取可用端口失败次数达到 100 次, 请检查端口占用情况."
         fi
         tmp_port=$(shuf -i 445-65535 -n 1)
         [[ ! $(is_test port_used $tmp_port) && $tmp_port != $port ]] && break
